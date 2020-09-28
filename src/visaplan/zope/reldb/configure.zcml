@@ -1,0 +1,20 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <configure zcml:condition="installed sqlalchemy">
+    <!-- If we have SQLAlchemy, provide an engine
+         (using the DSN from .get_dsn()) ...
+      -->
+    <include package=".engine"
+             />
+
+    <!-- ... and if we have zope.sqlalchemy *as well*,
+         register it for the transaction machinery:
+      -->
+    <include package=".register"
+        zcml:condition="installed zope.sqlalchemy"
+        />
+
+    </configure><!-- ... installed sqlalchemy -->
+
+</configure>

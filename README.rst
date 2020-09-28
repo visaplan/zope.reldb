@@ -1,0 +1,132 @@
+.. This README is meant for consumption by humans and pypi. Pypi can render rst files so please do not use Sphinx features.
+   If you want to learn more about writing documentation, please check out: http://docs.plone.org/about/documentation_styleguide.html
+   This text does not appear on pypi or github. It is a comment.
+
+===================
+visaplan.zope.reldb
+===================
+
+This package simply provides the configuration of a `Data source name`_ (DSN),
+e.g. for use with sqlalchemy_.
+
+For the heavy lifting of integration of database transactions of your
+relational database (like PostgreSQL_ or whatever) with the ZODB_, you'll
+likely want to use something like zope.sqlalchemy_, which in turn requires
+sqlalchemy_ to talk to the database.  However, zope.sqlalchemy_ doesn't offer a
+configuration method for the DSN.  This packages offers to store this DSN in
+the Zope configuration file (``parts/clientN/etc/zope.conf``).
+
+The idea is: You might have several instances of your Zope (for production,
+testing, development ...), and every now and then you replicate the productive
+data.  With the DSN stored in the ZODB, you'd have this information replicated
+as well, which might not work for you; you might have different databases on
+the same database server, or the production server connects to the database by
+socket which is not possible in your development instance, or whatever.
+
+
+Features
+========
+
+- Stores a DSN string in the Zope configuration and provides a `get_dsn`
+  function.
+- With SQLAlchemy_ installed, creates an Engine and a DBSession.
+- With zope.sqlalchemy_ installed as well, registers that DBSession
+  for the transaction machinery integration.
+
+
+Examples
+========
+
+This add-on can be seen in action at the following sites:
+
+- Is there a page on the internet where everybody can see the features?
+- https://www.unitracc.de
+- https://www.unitracc.com
+
+
+Installation
+============
+
+Add the package to your product requirements somehow;
+since we'll need to add a product configuration as well,
+you'll most likely add it to your `eggs` value
+in your buildout script (`buildout.cfg`)::
+
+
+    [buildout]
+
+    ...
+
+    eggs =
+        your.fancy.product
+        visaplan.zope.reldb
+
+
+Add a product configuration there as well, containing your data source name::
+
+    [buildout]
+
+    ...
+
+    [instance_base]
+    ...
+    zope-conf-additional =
+        <product-config reldb>
+        dsn postgresql+psycopg2://localhost/mydb
+        </product-config>
+
+(We follow the convention used by the UnifiedInstaller_ here; your section(s)
+might be named differently.)
+
+After running ``bin/buildout`` and restarting your Zope instance,
+the product configuration should have been added to your `zope.conf` file(s),
+and `your.fancy.product` can read the DSN string by calling
+`visaplan.zope.reldb.get_dsn` (*or*, if you have SQLAlchemy_,
+directly use `visaplan.zope.reldb.engine.engine`).
+
+
+Remark
+------
+
+"But, can't my product simply do all this by itself?!"
+
+Sure. Having this as a package helps / helped us to switch a whole bunch of
+packages from usage of Zope database adapters (stored in the ZODB) to
+sqlalchemy (with a DSN configured in zope.conf).
+
+
+Contribute
+==========
+
+- Issue Tracker: https://github.com/visaplan/zope.reldb/issues
+- Source Code: https://github.com/visaplan/zope.reldb
+
+
+Support
+=======
+
+If you are having issues, please let us know;
+please use the `issue tracker`_ mentioned above.
+
+
+License
+=======
+
+The project is licensed under the GPLv2.
+
+Futher reading
+==============
+
+* The `SQLAlchemy documentation`_ about `Database URLs`_
+
+.. _`Database URLs`: https://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls
+.. _`data source name`: https://en.wikipedia.org/wiki/Data_source_name
+.. _`issue tracker`: https://github.com/visaplan/zope.reldb/issues
+.. _PostgreSQL: https://www.postgresql.org
+.. _`SQLAlchemy documentation`: https://docs.sqlalchemy.org
+.. _sqlalchemy: https://pypi.org/project/sqlalchemy
+.. _UnifiedInstaller: https://github.com/plone/Installers-UnifiedInstaller#installation
+.. _ZODB: https://en.wikipedia.org/wiki/Zope_Object_Database
+.. _zope.sqlalchemy: ://pypi.org/project/zope.sqlalchemy
+
+.. vim: tw=79 cc=+1 sw=4 sts=4 si et
