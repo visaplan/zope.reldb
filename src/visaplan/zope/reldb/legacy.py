@@ -16,8 +16,11 @@ from .sql import select as SELECT
 from .sql import update as UPDATE
 
 # Logging / Debugging:
+from logging import getLogger
 from pdb import set_trace
 from visaplan.tools.debug import pp
+
+logger = getLogger('visaplan.zope.reldb.legacy')
 
 if engine is not None:
     inspector = inspect(engine)
