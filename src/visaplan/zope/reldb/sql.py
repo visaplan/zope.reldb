@@ -178,9 +178,7 @@ def pg_placeholder(key):
     higher-level functions like make_where_mask
     which take care of checking the key for dangerous values (to prevent SQL injection).
 
-    This is the placeholder factory used in the copy source of this module;
-    there is currently no facility to create SQL code generators which
-    use another placeholder convention, e.g. for SQLAlchemy.
+    This is the placeholder factory used in the copy source of this module.
     """
     if not key:
         raise ValueError('Empty field name %(key)r!' % locals())
