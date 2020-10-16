@@ -14,6 +14,12 @@ from zope.sqlalchemy import register
 
 # 3rd party:
 from sqlalchemy import create_engine
+from sqlalchemy.exc import (
+    DatabaseError,
+    DBAPIError,
+    OperationalError,
+    SQLAlchemyError,
+    )
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 # Local imports:
@@ -33,32 +39,17 @@ __all__ = [
 # We try to provide useful error messages
 # for database configuration problems ...
 
-caught_errors = []
-try:
-    pkg_resources.get_distribution('psycopg2')
-except pkg_resources.DistributionNotFound:
-    pass
-else:
-    # 3rd party:
-    from psycopg2 import OperationalError
-    caught_errors.append(OperationalError)
-
-class SomeUnusedException(Exception):
-    pass
-
-if not caught_errors:
-    caught_errors.append(SomeUnusedException)
-
-caught_errors = tuple(caught_errors)
-
 DB_CONNECT = get_dsn()
 if DB_CONNECT:
     try:
         logger.info('Creating DB engine from DSN %(DB_CONNECT)r ...', locals())
         engine = create_engine(DB_CONNECT)
-    except caught_errors as e:
+    except SQLAlchemyError as e:
         logger.error('Data source name (DSN) is probably wrong!')
-        # logger.exception()
+        logger.exception(e)
+        for ec in (OperationalError, DatabaseError, DBAPIError):
+            if isinstance(e, ec):
+                logger.info('This is a(n) %r', (ec.__name__,))
         engine = None
         DBSession = None
     else:
