@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*- vim: et ts=8 sw=4 sts=4 si tw=79 cc=+1
 """Installer for the visaplan.zope.reldb package."""
+# Python compatibility:
 from __future__ import absolute_import
-from __future__ import print_function
 
-from setuptools import find_packages
-from setuptools import setup
+# Setup tools:
+from setuptools import find_packages, setup
+
+# Standard library:
 from os.path import isfile
 
 package_name = 'visaplan.zope.reldb'
@@ -142,7 +144,15 @@ setup_kwargs = dict(
         "Environment :: Web Environment",
         "Framework :: Plone",
         "Framework :: Plone :: 4.3",
+        "Framework :: Plone :: 5.0",
+        "Framework :: Plone :: 5.1",
+        "Framework :: Plone :: 5.2",
+        'Framework :: Zope',
         'Framework :: Zope2',
+        'Framework :: Zope3',
+        'Framework :: Zope :: 2',
+        'Framework :: Zope :: 3',
+        'Framework :: Zope :: 4',
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
@@ -167,6 +177,7 @@ setup_kwargs = dict(
         'setuptools',
         'six',
         # -*- Extra requirements: -*-
+        'visaplan.tools > 1.3.0',
         # ... further requirements removed
     ],
     entry_points="""

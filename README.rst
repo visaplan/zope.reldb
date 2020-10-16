@@ -2,12 +2,16 @@
    If you want to learn more about writing documentation, please check out: http://docs.plone.org/about/documentation_styleguide.html
    This text does not appear on pypi or github. It is a comment.
 
+.. image::
+   https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
+       :target: https://pycqa.github.io/isort/
+
 ===================
 visaplan.zope.reldb
 ===================
 
 This package simply provides the configuration of a `Data source name`_ (DSN),
-e.g. for use with sqlalchemy_.
+e.g. for use with SQLAlchemy_.
 
 For the heavy lifting of integration of database transactions of your
 relational database (like PostgreSQL_ or whatever) with the ZODB_, you'll
@@ -29,19 +33,16 @@ Features
 
 - Stores a DSN string in the Zope configuration and provides a `get_dsn`
   function.
-- With SQLAlchemy_ installed, creates an Engine and a DBSession.
+- With SQLAlchemy_ installed,
+
+  - creates an Engine and a DBSession,
+    and
+  - provides an optional `.legacy.SQLWrapper` context manager class
+    which sports a few simple
+    `insert`, `update`, `delete`, `select` and `query` methods
+
 - With zope.sqlalchemy_ installed as well, registers that DBSession
   for the transaction machinery integration.
-
-
-Examples
-========
-
-This add-on can be seen in action at the following sites:
-
-- Is there a page on the internet where everybody can see the features?
-- https://www.unitracc.de
-- https://www.unitracc.com
 
 
 Installation
@@ -60,7 +61,6 @@ in your buildout script (`buildout.cfg`)::
     eggs =
         your.fancy.product
         visaplan.zope.reldb
-
 
 Add a product configuration there as well, containing your data source name::
 
@@ -92,7 +92,7 @@ Remark
 
 Sure. Having this as a package helps / helped us to switch a whole bunch of
 packages from usage of Zope database adapters (stored in the ZODB) to
-sqlalchemy (with a DSN configured in zope.conf).
+sqlalchemy (with a DSN configured in the ``zope.conf`` file(s)).
 
 
 Contribute

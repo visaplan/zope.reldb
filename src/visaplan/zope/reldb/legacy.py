@@ -17,8 +17,6 @@ from .sql import update as UPDATE
 
 # Logging / Debugging:
 from logging import getLogger
-from pdb import set_trace
-from visaplan.tools.debug import pp
 
 logger = getLogger('visaplan.zope.reldb.legacy')
 
@@ -48,18 +46,13 @@ class SQLWrapper(object):
             raise ValueError('No Data Source Name (DSN) configured! '
                     '(zope.conf; <product-config reldb>)')
         self.session = DBSession()
-        pp(('self.session:', self.session))
 
     def __enter__(self):
-        # pp(('self.session:', self.session), ('dir(...):', dir(self.session)))
-        pp(('self.session:', self.session))
         self.connection = self.session #.begin()
-        pp(('self.connection:', self.connection))
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        # pass
-        pp(('self:', self), ('exc_type:', exc_type), ('exc_value:', exc_value), ('traceback:', traceback))
+        pass
 
     def insert(self, *args, **kwargs):
         """

@@ -20,11 +20,9 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from . import get_dsn
 
 # Logging / Debugging:
-from pdb import set_trace
-from visaplan.plone.tools.log import getLogSupport
-from visaplan.tools.debug import pp
+from logging import getLogger
 
-logger, debug_active, DEBUG = getLogSupport(fn=__file__)
+logger = getLogger('visaplan.zope.reldb.engine')
 
 
 __all__ = [

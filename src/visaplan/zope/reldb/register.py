@@ -7,7 +7,7 @@ from __future__ import absolute_import
 from zope.sqlalchemy import register
 
 # Local imports:
-from .engine import DBSession, engine
+from .engine import DBSession
 
 if DBSession is not None:
     register(DBSession)
