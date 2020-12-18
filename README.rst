@@ -17,7 +17,7 @@ For the heavy lifting of integration of database transactions of your
 relational database (like PostgreSQL_ or whatever) with the ZODB_, you'll
 likely want to use something like zope.sqlalchemy_, which in turn requires
 sqlalchemy_ to talk to the database.  However, zope.sqlalchemy_ doesn't offer a
-configuration method for the DSN.  This packages offers to store this DSN in
+configuration method for the DSN.  This package offers to store this `DSN` in
 the Zope configuration file (``parts/clientN/etc/zope.conf``).
 
 The idea is: You might have several instances of your Zope (for production,
@@ -55,7 +55,6 @@ in your buildout script (`buildout.cfg`)::
 
 
     [buildout]
-
     ...
 
     eggs =
@@ -65,7 +64,6 @@ in your buildout script (`buildout.cfg`)::
 Add a product configuration there as well, containing your data source name::
 
     [buildout]
-
     ...
 
     [instance_base]
