@@ -10,7 +10,7 @@
 visaplan.zope.reldb
 ===================
 
-This package simply provides the configuration of a `Data source name`_ (DSN),
+This package provides the configuration of a `Data source name`_ (DSN),
 e.g. for use with SQLAlchemy_.
 
 For the heavy lifting of integration of database transactions of your
@@ -23,9 +23,14 @@ the Zope configuration file (``parts/clientN/etc/zope.conf``).
 The idea is: You might have several instances of your Zope (for production,
 testing, development ...), and every now and then you replicate the productive
 data.  With the DSN stored in the ZODB, you'd have this information replicated
-as well, which might not work for you; you might have different databases on
-the same database server, or the production server connects to the database by
-socket which is not possible in your development instance, or whatever.
+as well, which might
+*make your test and/or development instances write to your productive database.*
+
+No, you don't want this to happen.
+
+By the way: both the normal ZODB_ configuration and RelStorage_  store
+their information in that very ``zope.conf`` file.
+Our idea can't be so bad, then.
 
 
 Features
@@ -35,9 +40,9 @@ Features
   function.
 - With SQLAlchemy_ installed,
 
-  - creates an Engine and a DBSession,
+  - creates an Engine_ and a DBSession,
     and
-  - provides an optional `.legacy.SQLWrapper` context manager class
+  - provides an optional `.legacy.SQLWrapper` `context manager`_ class
     which sports a few simple
     `insert`, `update`, `delete`, `select` and `query` methods
 
@@ -59,7 +64,7 @@ in your buildout script (`buildout.cfg`)::
 
     eggs =
         your.fancy.product
-        visaplan.zope.reldb
+        visaplan.zope.reldb_
 
 Add a product configuration there as well, containing your data source name::
 
@@ -117,13 +122,17 @@ Futher reading
 
 * The `SQLAlchemy documentation`_ about `Database URLs`_
 
+.. _`context manager`: https://www.python.org/dev/peps/pep-0343/#specification-the-with-statement
 .. _`Database URLs`: https://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls
 .. _`data source name`: https://en.wikipedia.org/wiki/Data_source_name
+.. _Engine: https://docs.sqlalchemy.org/en/13/core/connections.html#sqlalchemy.engine.Engine
 .. _`issue tracker`: https://github.com/visaplan/zope.reldb/issues
 .. _PostgreSQL: https://www.postgresql.org
+.. _RelStorage: https://pypi.org/project/relstorage
 .. _`SQLAlchemy documentation`: https://docs.sqlalchemy.org
 .. _sqlalchemy: https://pypi.org/project/sqlalchemy
 .. _UnifiedInstaller: https://github.com/plone/Installers-UnifiedInstaller#installation
+.. _visaplan.zope.reldb: https://pypi.org/project/visaplan.zope.reldb
 .. _ZODB: https://en.wikipedia.org/wiki/Zope_Object_Database
 .. _zope.sqlalchemy: ://pypi.org/project/zope.sqlalchemy
 
