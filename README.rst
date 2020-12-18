@@ -10,13 +10,13 @@
 visaplan.zope.reldb
 ===================
 
-This package provides the configuration of a `Data source name`_ (DSN),
+This package provides the configuration of a `Data source name`_ *(DSN)*,
 e.g. for use with SQLAlchemy_.
 
 For the heavy lifting of integration of database transactions of your
 relational database (like PostgreSQL_ or whatever) with the ZODB_, you'll
 likely want to use something like zope.sqlalchemy_, which in turn requires
-sqlalchemy_ to talk to the database.  However, zope.sqlalchemy_ doesn't offer a
+SQLAlchemy_ to talk to the database.  However, zope.sqlalchemy_ doesn't offer a
 configuration method for the DSN.  This package offers to store this `DSN` in
 the Zope configuration file (``parts/clientN/etc/zope.conf``).
 
@@ -64,7 +64,7 @@ in your buildout script (`buildout.cfg`)::
 
     eggs =
         your.fancy.product
-        visaplan.zope.reldb_
+        visaplan.zope.reldb
 
 Add a product configuration there as well, containing your data source name::
 
@@ -82,10 +82,10 @@ Add a product configuration there as well, containing your data source name::
 might be named differently.)
 
 After running ``bin/buildout`` and restarting your Zope instance,
-the product configuration should have been added to your `zope.conf` file(s),
+the product configuration should have been added to your ``zope.conf`` file(s),
 and `your.fancy.product` can read the DSN string by calling
-`visaplan.zope.reldb.get_dsn` (*or*, if you have SQLAlchemy_,
-directly use `visaplan.zope.reldb.engine.engine`).
+`visaplan.zope.reldb`_.get_dsn (*or*, if you have SQLAlchemy_,
+directly use `visaplan.zope.reldb`_.engine.engine).
 
 
 Remark
